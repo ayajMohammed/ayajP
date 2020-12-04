@@ -1,10 +1,15 @@
-var express= require('express')
-const app=express();
-const port=5000;
+var express = require('express')
+const app = express();
+bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 var routers = require('./src/routes/index');
-// // Initiallize Route
+//Initiallize Route
 routers.initialize(app);
-app.listen(port,()=>{
+
+
+const port = 5000;
+app.listen(port, () => {
     console.log(`server is listening on port ${port}`)
 })
 
