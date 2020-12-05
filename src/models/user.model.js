@@ -19,8 +19,11 @@ let userSchema = new mongoose.Schema({
     },
     loginAttempts:{
         type:Number
-    }
+    },
+    
 
+}, {
+    timestamps: { createdAt: true, updatedAt: true }
 })
 
 module.exports = mongoose.model('user', userSchema);
