@@ -1,5 +1,5 @@
 var mongoose = require('mongoose')
-let practiceSchema = new mongoose.Schema({
+let userSchema = new mongoose.Schema({
 
     name: {
         type: String,
@@ -23,7 +23,7 @@ let practiceSchema = new mongoose.Schema({
 
 })
 
-module.exports = mongoose.model('Details', practiceSchema);
+module.exports = mongoose.model('user', userSchema);
 
 
 

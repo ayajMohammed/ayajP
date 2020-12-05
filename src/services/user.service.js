@@ -1,2 +1,2 @@
 var mongoose = require("mongoose");
-var practiceSchema = require('mongoose').model('Details');
+var userSchema = require('mongoose').model('user');
