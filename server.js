@@ -1,3 +1,5 @@
+var dataBase=require('./config/db')
+
 var express = require('express')
 const app = express();
 bodyParser = require('body-parser');
@@ -10,11 +12,11 @@ routers.initialize(app);
 
 const port = 5000;
 app.listen(port, () => {
+    dataBase.dbConnection()
     console.log(`server is listening on port ${port}`)
 })
 
-
-
+  
 
 // var express = require('express');
 // var app = express();
