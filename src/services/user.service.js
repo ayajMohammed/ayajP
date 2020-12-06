@@ -76,9 +76,12 @@ exports.createService = async (reqData) => {
 
 exports.findAllUser = async (query) => {
 	try {
-		let result = await userSchema.aggregate(
-			[{ $match: { name: query.name } }]
-		);
+		// matched profiles based on filters
+		
+		// let result = await userSchema.aggregate(
+		// 	[{ $match: { name: query.name } }]
+		// );
+		let result = userSchema.find({ "name": {$regex: query.name, $options:"i"}})
 		return result
 
 	}
