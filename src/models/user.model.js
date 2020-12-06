@@ -20,9 +20,14 @@ let userSchema = new mongoose.Schema({
     loginAttempts:{
         type:Number
     },
+    is_Active:{
+        type:Boolean,
+        default:true
+    }
     
 
-}, {
+},
+ {
     timestamps: { createdAt: true, updatedAt: true }
 })
 
