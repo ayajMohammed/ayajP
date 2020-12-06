@@ -1,4 +1,5 @@
-const userService = require('../services/user.service')
+const userService = require('../services/user.service'),
+	jwt = require('../utils/auth')
 
 
 exports.createUser = async (req, res) => {
@@ -47,19 +48,23 @@ exports.createUser = async (req, res) => {
 
 module.exports.loginUser = async (req, res) => {
 	const reqData = Object.assign({}, req.body);
-	let login = await userService.findOne({ email: reqData.email })
-	if (login) {
-		let attemptCheck = await userService.loginAttempts(login)
+	let user = await userService.findOne({ email: reqData.email })
+	if (user) {
+		let attemptCheck = await userService.loginAttempts(user)
 		if (attemptCheck) {
-			let result = await userService.passwordVerify(login, reqData.password)
+			let result = await userService.passwordVerify(user, reqData.password)
 			if (result) {
-				let token = await userService.createToken(login)
+				const token = await jwt.generate(user);
+				delete user.password;
+				const response = {
+					user,
+					accessToken: token
+				};
 				if (token) {
 					res.json({
 						code: 2000,
 						msg: "login sucessfull",
-						data: login,
-						token: token
+						result: response
 					})
 				} else {
 					res.json({
@@ -67,11 +72,25 @@ module.exports.loginUser = async (req, res) => {
 						msg: "login failed"
 					})
 				}
+				// let token = await userService.createToken(login)
+				// if (token) {
+				// 	res.json({
+				// 		code: 2000,
+				// 		msg: "login sucessfull",
+				// 		data: login,
+				// 		token: token
+				// 	})
+				// } else {
+				// 	res.json({
+				// 		code: 5000,
+				// 		msg: "login failed"
+				// 	})
+				// }
 
 			} else {
 				let attempts = await userService.appendAttempts(login)
-			
-				let x = (attempts.loginAttempts == 0) ? 3 : (attempts.loginAttempts == 1) ? 2 : (attempts.loginAttempts == 2) ? 1 :0
+
+				let x = (attempts.loginAttempts == 0) ? 3 : (attempts.loginAttempts == 1) ? 2 : (attempts.loginAttempts == 2) ? 1 : 0
 
 
 				res.json({
