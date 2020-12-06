@@ -74,6 +74,19 @@ exports.createService = async (reqData) => {
 	}
 };
 
+exports.findAllUser = async (query) => {
+	let limit = query.limit || 10;
+	let page = query.page || 0;
+	let offset = limit * page;
+	try {
+
+	return result = await userSchema.find();
+	
+	}
+	catch (error) {
+		return false;
+	}
+};
 
 
 

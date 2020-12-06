@@ -121,6 +121,16 @@ module.exports.loginUser = async (req, res) => {
 	}
 
 }
+module.exports.getAllUser = async (req, res) => {
+	const reqData = Object.assign({}, req.body);
+	let userList = await userService.findAllUser(reqData)
+	if(userList){
+		res.json({
+			result:userList
+		})
+	}
+
+}
 
 
 

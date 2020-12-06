@@ -1,5 +1,5 @@
 
-const user = require('./user')
+const user = require('./user.routes')
 
 
 module.exports.initialize = function (express) {
