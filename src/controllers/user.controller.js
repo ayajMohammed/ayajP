@@ -55,7 +55,8 @@ module.exports.loginUser = async (req, res) => {
 			let result = await userService.passwordVerify(user, reqData.password)
 			if (result) {
 				const token = await jwt.generate(user);
-				delete user.password;
+				// let k=	user.remove("password");
+				// 	console.log(k,"resss")
 				const response = {
 					user,
 					accessToken: token
@@ -124,9 +125,16 @@ module.exports.loginUser = async (req, res) => {
 module.exports.getAllUser = async (req, res) => {
 	const reqData = Object.assign({}, req.body);
 	let userList = await userService.findAllUser(reqData)
-	if(userList){
+	if (userList) {
 		res.json({
-			result:userList
+			code:200,
+			msg:"users found sucessfully",
+			result: userList
+		})
+	}else{
+		res.json({
+			code: 5000,
+			msg: "can't find users"
 		})
 	}
 
