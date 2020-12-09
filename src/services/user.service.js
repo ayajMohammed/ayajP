@@ -11,7 +11,20 @@ exports.findOne = async (criteria) => {
 	catch (error) {
 		return false;
 	}
+	// let result=await userSchema.findOne(criteria)
+	// console.log(result)
+	// return result
 };
+exports.updateMany=async(body,userId)=>{
+	const updateUser = await userSchema.updateMany({_id:userId}, body);
+	return updateUser;
+
+	// let result=await userSchema.
+}
+exports.findAll=async()=>{
+	let result=await userSchema.find()
+	return result
+}
 exports.passwordVerify = async (password, reqPassword) => {
 	let result = passwordHash.verify(reqPassword, password.password)
 	if (result) {
@@ -74,13 +87,14 @@ exports.createService = async (reqData) => {
 	}
 };
 
-exports.findAllUser = async (query) => {
+exports.nameSearch = async (query) => {
 	try {
 		// matched profiles based on filters
 		
 		// let result = await userSchema.aggregate(
 		// 	[{ $match: { name: query.name } }]
 		// );
+		// used for search bar fuctionality regex only change options remain same for every use
 		let result = userSchema.find({ "name": {$regex: query.name, $options:"i"}})
 		return result
 

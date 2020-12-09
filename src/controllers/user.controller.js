@@ -122,16 +122,16 @@ module.exports.loginUser = async (req, res) => {
 	}
 
 }
-module.exports.getAllUser = async (req, res) => {
+module.exports.searchUser = async (req, res) => {
 	const reqData = Object.assign({}, req.body);
-	let userList = await userService.findAllUser(reqData)
+	let userList = await userService.nameSearch(reqData)
 	if (userList) {
 		res.json({
-			code:200,
-			msg:"users found sucessfully",
+			code: 200,
+			msg: "users found sucessfully",
 			result: userList
 		})
-	}else{
+	} else {
 		res.json({
 			code: 5000,
 			msg: "can't find users"
@@ -140,12 +140,52 @@ module.exports.getAllUser = async (req, res) => {
 
 }
 
+module.exports.update = async function (req, res) {
+	let reqData = Object.assign({}, req.body);
+	let user = await userService.findOne({ _id: req.params.id })
+	if (!user || user == null) {
+		res.json({
+			code: 5000,
+			msg: "details not found to update"
+		})
+
+
+	} else {
+
+		const query = {
+			$set: reqData,
+		}
+		const updateUser = await userService.updateMany(query, req.params.id);
+		if (updateUser) {
+			res.json({
+				code: 200,
+				msg: "update sucessfully",
+				data: updateUser
+			})
+		}else{
+			res.json({
+				code:5000,
+				msg:"update failed"
+			})
+		}
+	}
+}
 
 
 
-
-// module.exports.postUser	=async function (req,res){
-// 		reqData=req.body
-// 		console.log(reqData,"practice")
-// 	}
+module.exports.getAllUser = async function (req, res) {
+	let result = await userService.findAll()
+	if (result) {
+		res.json({
+			code: 200,
+			msg: "users found",
+			data: result
+		})
+	} else (
+		res.json({
+			code: 5000,
+			msg: "no users found"
+		})
+	)
+}
 
