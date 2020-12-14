@@ -89,15 +89,15 @@ exports.createService = async (reqData) => {
 
 exports.nameSearch = async (query) => {
 	try {
-		// matched profiles based on filters
-		
+		/*  matched profiles based on filters */
+
 		// let result = await userSchema.aggregate(
 		// 	[{ $match: { name: query.name } }]
 		// );
-		// used for search bar fuctionality regex only change options remain same for every use
-		let result = userSchema.find({ "name": {$regex: query.name, $options:"i"}})
-		return result
 
+		let result = await userSchema.find({ "name": { $regex: query.name, $options: "i" } })
+
+		return result;
 	}
 	catch (error) {
 		return false;

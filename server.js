@@ -1,5 +1,4 @@
 var dataBase=require('./config/db')
-
 var express = require('express')
 const app = express();
 bodyParser = require('body-parser');
